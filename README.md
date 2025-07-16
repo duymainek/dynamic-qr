@@ -2,7 +2,7 @@
 
 API để tạo mã QR động từ mã QR tĩnh VietQR với số tiền giao dịch cụ thể.
 
-## 🔧 Cài đặt và chạy
+## 🔧 Cài đặt và chạy local
 
 ```bash
 # Cài đặt dependencies
@@ -16,6 +16,16 @@ npm run dev
 ```
 
 Server sẽ chạy trên port 3000.
+
+## 🚀 Deploy Netlify Functions
+
+- Đã có sẵn function tại: `netlify/functions/dynamic-qr.js`
+- Khi deploy lên Netlify, endpoint sẽ là:
+  ```
+  https://<your-netlify-site>.netlify.app/.netlify/functions/dynamic-qr?txt=...&amount=...
+  ```
+- Không cần build, chỉ cần push code lên GitHub và kết nối với Netlify.
+- **Functions directory:** `netlify/functions`
 
 ## 📱 Cách lấy originalQR (txt parameter)
 
@@ -35,7 +45,7 @@ Server sẽ chạy trên port 3000.
 
 ## 🚀 Cách sử dụng API
 
-### Endpoint: GET /api/dynamic-qr/generate
+### Endpoint: GET /api/dynamic-qr/generate (local) hoặc /.netlify/functions/dynamic-qr (Netlify)
 
 **Query Parameters:**
 - `txt` (string, required): Chuỗi mã QR tĩnh VietQR (originalQR)
@@ -44,6 +54,9 @@ Server sẽ chạy trên port 3000.
 **Example:**
 ```bash
 curl "http://localhost:3000/api/dynamic-qr/generate?txt=00020101021238540010A00000072701270006970454011639565802VN5309Tran%20Duy6008Ho%20Chi%20Minh610870000630466E4&amount=50000"
+
+# Hoặc trên Netlify:
+curl "https://<your-netlify-site>.netlify.app/.netlify/functions/dynamic-qr?txt=...&amount=..."
 ```
 
 **Response:**
@@ -71,4 +84,4 @@ npm test
 
 - API sẽ tự động tính toán CRC-16/CCITT-FALSE theo chuẩn VietQR
 - Số tiền phải là số dương
-- Chuỗi QR tĩnh phải có định dạng VietQR hợp lệ 
+- Chuỗi QR tĩnh phải có định dạng VietQR hợp lệ
