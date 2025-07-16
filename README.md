@@ -40,7 +40,7 @@ Server sẽ chạy trên port 3000.
 ➡️ **Text đó chính là originalQR** - hay chính là field `txt` cần truyền trong API.
 
 ## 📱 Cách triển khai trên IOS bằng Shortcuts
-<img width="985" height="980" alt="image" src="https://github.com/user-attachments/assets/3f36a5ad-45ff-443a-a1ab-39cf4a8e66aa" />
+<img width="985" height="981" alt="image" src="https://github.com/user-attachments/assets/faa5630c-5c9c-4762-a6bb-4f7f32e4b94c" />
 
 
 ## 🚀 Cách sử dụng API
