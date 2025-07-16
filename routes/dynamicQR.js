@@ -11,10 +11,7 @@ const router = express.Router();
  */
 
 /**
- * @typedef {Object} DynamicQRResponse
- * @property {boolean} success - Trạng thái thành công
- * @property {string} dynamicQR - Mã QR động đã tạo
- * @property {string} [error] - Thông báo lỗi nếu có
+ * @typedef {string} DynamicQRResponse - Mã QR động đã tạo (dưới dạng text thuần)
  */
 
 const requestSchema = Joi.object({
@@ -31,7 +28,7 @@ const requestSchema = Joi.object({
 /**
  * Tạo mã QR động từ mã QR tĩnh và số tiền giao dịch
  * @param {import("express").Request} req - Request object
- * @param {import("express").Response} res - Response object
+ * @param {import("express").Response} res - Response object chứa dynamicQR dưới dạng text thuần
  * @returns {Promise<void>}
  */
 async function generateDynamicQR(req, res) {
@@ -47,30 +44,19 @@ async function generateDynamicQR(req, res) {
         const { error, value } = requestSchema.validate(requestData);
         
         if (error) {
-            return res.status(400).json({
-                success: false,
-                error: error.details[0].message
-            });
+            return res.status(400).send(error.details[0].message);
         }
 
         const { txt: validTxt, amount: validAmount } = value;
 
         const dynamicQR = createDynamicQR(validTxt, validAmount);
 
-        res.json({
-            success: true,
-            dynamicQR: dynamicQR,
-            originalQR: validTxt,
-            amount: validAmount
-        });
+        res.send(dynamicQR);
 
     } catch (error) {
         console.error('Error generating dynamic QR:', error);
         
-        res.status(500).json({
-            success: false,
-            error: error.message || 'Đã xảy ra lỗi khi tạo mã QR động'
-        });
+        res.status(500).send(error.message || 'Đã xảy ra lỗi khi tạo mã QR động');
     }
 }
 
